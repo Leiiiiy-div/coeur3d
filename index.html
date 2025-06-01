@@ -14,8 +14,10 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
   <script>
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 8; // 👉 recul plus important ici
+    const camera = new THREE.PerspectiveCamera(
+      75, window.innerWidth / window.innerHeight, 0.1, 1000
+    );
+    camera.position.z = 15; // 👈 reculé encore plus
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -32,10 +34,10 @@
     let heart;
 
     loader.load(
-      'heart.glb', // ton fichier 3D doit s'appeler heart.glb
+      'heart.glb', // Assure-toi que ce fichier est bien présent
       function (gltf) {
         heart = gltf.scene;
-        heart.scale.set(0.2, 0.2, 0.2); // toujours réduit
+        heart.scale.set(0.2, 0.2, 0.2); // Ajuste ici si besoin
         scene.add(heart);
       },
       undefined,
