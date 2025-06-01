@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cœur 3D</title>
+  <title>Cœur 3D Battant</title>
   <style>
     body { margin: 0; background: black; overflow: hidden; }
     canvas { display: block; }
@@ -17,7 +17,7 @@
     const camera = new THREE.PerspectiveCamera(
       75, window.innerWidth / window.innerHeight, 0.1, 1000
     );
-    camera.position.z = 15; // 👈 reculé encore plus
+    camera.position.z = 15;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -32,12 +32,13 @@
 
     const loader = new THREE.GLTFLoader();
     let heart;
+    let clock = new THREE.Clock();
 
     loader.load(
-      'heart.glb', // Assure-toi que ce fichier est bien présent
+      'heart.glb', // Assure-toi que ce fichier est bien là
       function (gltf) {
         heart = gltf.scene;
-        heart.scale.set(0.2, 0.2, 0.2); // Ajuste ici si besoin
+        heart.scale.set(0.2, 0.2, 0.2);
         scene.add(heart);
       },
       undefined,
@@ -54,13 +55,22 @@
 
     function animate() {
       requestAnimationFrame(animate);
+
+      const time = clock.getElapsedTime();
+
       if (heart) {
-        heart.rotation.y += 0.005;
+        // Rotation souris
         heart.rotation.x = mouse.y * 0.5;
         heart.rotation.y = mouse.x * 0.5;
+
+        // Effet battement
+        const scale = 0.2 + Math.sin(time * 3) * 0.01;
+        heart.scale.set(scale, scale, scale);
       }
+
       renderer.render(scene, camera);
     }
+
     animate();
 
     window.addEventListener('resize', () => {
@@ -70,5 +80,7 @@
     });
   </script>
 </body>
+</html>
+
 </html>
 
